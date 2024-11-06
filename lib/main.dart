@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
-void main() {
+import 'package:mobile_dev_final_project/firebase_options.dart';
+import 'SingInForm.dart';
+import 'package:firebase_core/firebase_core.dart';
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -60,7 +64,14 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
-                    print('Sign In Button Pressed');
+                   // print('Sign In Button Pressed');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInForm(),
+                      ),
+                    );
+
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

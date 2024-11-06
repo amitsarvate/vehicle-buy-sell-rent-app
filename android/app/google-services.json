@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "306457939704",
+    "project_id": "simongoterav",
+    "storage_bucket": "simongoterav.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306457939704:android:15d7ab509d7e380513b50d",
+        "android_client_info": {
+          "package_name": "com.example.mobile_dev_final_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt8kGf544FGNoLji8Nqtu6n8uPVhUJi20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
