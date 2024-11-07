@@ -5,7 +5,7 @@ import 'MainPage.dart';
 
 class AuthService {
   // Function to sign up a user
-  Future<void> signUp({
+  Future<void> signUp(BuildContext context,{
     required String email,
     required String password,
   }) async {
@@ -13,6 +13,13 @@ class AuthService {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
+      );
+      await Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Main(userEmail: email),
+        ),
+            (route) => false, // This removes all previous routes from the stack
       );
     } on FirebaseAuthException catch (e) {
       String message = '';

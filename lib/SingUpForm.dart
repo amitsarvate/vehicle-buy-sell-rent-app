@@ -59,7 +59,7 @@ class SignUpForm extends StatelessWidget {
 
                     print('Email: $email');
                     print('Password: $password');
-                    AuthService().signUp(email: email, password: password);
+                    AuthService().signUp(context,email: email, password: password);
                   }
                 },
                 child: Text("Submit"),
