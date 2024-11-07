@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'authService.dart';
 
-class SignInForm extends StatelessWidget {
+class SignUpForm extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -59,7 +59,7 @@ class SignInForm extends StatelessWidget {
 
                     print('Email: $email');
                     print('Password: $password');
-                    AuthService().signIn(context, email: email, password: password);
+                    AuthService().signUp(email: email, password: password);
                   }
                 },
                 child: Text("Submit"),

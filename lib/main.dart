@@ -1,10 +1,16 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_final_project/firebase_options.dart';
 import 'SingInForm.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'MainPage.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseAppCheck.instance.activate(
+    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+    androidProvider: AndroidProvider.debug,
+  );
   runApp(const MyApp());
 }
 
@@ -34,6 +40,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void goToHomePage() async{
+    await Navigator.pushReplacement(context,
+        MaterialPageRoute(
+            builder: (BuildContext context)  =>Main(userEmail: null)
+        )
+    );
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +64,8 @@ class _HomePageState extends State<HomePage> {
               children: [
                 IconButton(
                   onPressed: () {
-                    print('Buy / Rent Button Pressed');
+                    goToHomePage();
+
                   },
                   icon: Icon(Icons.directions_car, color: Colors.white),
                 ),
