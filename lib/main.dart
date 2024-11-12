@@ -1,5 +1,7 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_final_project/BuyRentCarPage.dart';
+import 'package:mobile_dev_final_project/SellCarPage.dart';
 import 'package:mobile_dev_final_project/firebase_options.dart';
 import 'SingInForm.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -128,6 +130,9 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   onPressed: () {
                     print('Buy / Rent Car Button Pressed');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BuyRentCarPage()));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xffe23636), // Button color
@@ -147,6 +152,9 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   onPressed: () {
                     print('Sell Car Button Pressed');
+                    Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => SellCarPage()));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xffe23636), // Button color
