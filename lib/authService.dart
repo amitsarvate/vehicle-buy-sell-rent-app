@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'MainPage.dart';
 
 class AuthService {
   // Function to sign up a user
-  Future<void> signUp(BuildContext context,{
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signUp(
+      BuildContext context, {
+        required String email,
+        required String password,
+      }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -29,48 +29,50 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         message = 'An account already exists with that email';
       }
-      Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
 
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.black54,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+        ),
       );
     } catch (e) {
-      Fluttertoast.showToast(
-        msg: 'An error occurred. Please try again.',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
-
+      // Show SnackBar instead of Fluttertoast
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred. Please try again.'),
+          backgroundColor: Colors.black54,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+        ),
       );
     }
   }
 
   // Function to sign in a user
-  Future<void> signIn(BuildContext context,{
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signIn(
+      BuildContext context, {
+        required String email,
+        required String password,
+      }) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      Fluttertoast.showToast(
-        msg: 'Sign in successful',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
-
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Sign in successful'),
+          backgroundColor: Colors.black54,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+        ),
       );
+
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -78,7 +80,6 @@ class AuthService {
         ),
             (route) => false, // This removes all previous routes from the stack
       );
-
     } on FirebaseAuthException catch (e) {
       String message = '';
 
@@ -87,23 +88,24 @@ class AuthService {
       } else if (e.code == 'wrong-password') {
         message = 'Incorrect password';
       }
-      Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.black54,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+        ),
       );
     } catch (e) {
-      Fluttertoast.showToast(
-        msg: 'An error occurred. Please try again.',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
 
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred. Please try again.'),
+          backgroundColor: Colors.black54,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+        ),
       );
     }
   }
