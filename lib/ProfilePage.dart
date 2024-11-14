@@ -27,6 +27,20 @@ class ProfilePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+
+              // Profile picture (CircleAvatar)
+              CircleAvatar(
+                radius: 50,  // Size of the avatar (make it 50 for example)
+                backgroundColor: Colors.grey[200],  // Background color
+                child: Icon(
+                  Icons.person,  // Default icon if no image
+                  size: 50,
+                  color: Colors.grey[800],  // Icon color
+                ),
+              ),
+              SizedBox(height: 20),  // Space between avatar and email
+
+              // Email text
               Text(
                 'Email: ${user.email}',
                 style: TextStyle(
