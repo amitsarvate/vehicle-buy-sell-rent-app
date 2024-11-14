@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'SellPostListPage.dart';
 import 'ProfilePage.dart';
+import 'main.dart';
 
 class Main extends StatefulWidget {
   final String? userEmail;
@@ -33,6 +34,17 @@ class _HomePageState extends State<Main> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page',style: TextStyle(color: Colors.white)),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navigate back to the previous screen
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(title: "AutoHub",),
+                )
+            );
+          },
+        ),
         backgroundColor: Color(0xffe23636),
       ),
       body: widgetOptions[_selectedIndex], // Display the selected page
