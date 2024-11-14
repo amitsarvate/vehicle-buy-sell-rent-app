@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'SellPostListPage.dart';
+import 'ProfilePage.dart';
 
 class Main extends StatefulWidget {
   final String? userEmail;
@@ -25,7 +26,8 @@ class _HomePageState extends State<Main> {
     final widgetOptions = [
       SellPostListPage(), // Display SellPostListPage for Home
       Center(child: Text('Add Page', style: TextStyle(fontSize: 24))), // Placeholder for Add page
-      Center(child: Text(widget.userEmail ?? 'Guest Mode', style: TextStyle(fontSize: 24))), // Profile page
+      //Center(child: Text(widget.userEmail ?? 'Guest Mode', style: TextStyle(fontSize: 24))), // Profile page
+      ProfilePage(),
     ];
 
     return Scaffold(
