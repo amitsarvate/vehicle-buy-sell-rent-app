@@ -47,11 +47,14 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('Login & Signup'),
+        title: Text('Login & Signup',style: TextStyle(color: Colors.white)),
+        backgroundColor: Color(0xffe23636),
         bottom: TabBar(
           controller: _tabController,
+          labelColor: Colors.white, // Set label color to make text visible on white
+          indicatorColor: Colors.white,
           tabs: [
-            Tab(text: 'Login'),
+            Tab(text: 'Login',),
             Tab(text: 'Signup'),
           ],
         ),

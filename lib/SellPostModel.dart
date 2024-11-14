@@ -5,7 +5,7 @@ class SellPostModel{
   final CollectionReference sellPostCollection =
   FirebaseFirestore.instance.collection('sellPosts');
 
-  Stream<List<SellPost>> getGradesStream() {
+  Stream<List<SellPost>> getSellsPostStream() {
     return sellPostCollection.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         SellPost sellPost = SellPost.fromMap(doc.data() as Map<String, dynamic>);

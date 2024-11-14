@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'SellPostListPage.dart';
 
 class Main extends StatefulWidget {
   final String? userEmail;
@@ -20,20 +21,23 @@ class _HomePageState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
+    // Widgets for each bottom navigation item
+    final widgetOptions = [
+      SellPostListPage(), // Display SellPostListPage for Home
+      Center(child: Text('Add Page', style: TextStyle(fontSize: 24))), // Placeholder for Add page
+      Center(child: Text(widget.userEmail ?? 'Guest Mode', style: TextStyle(fontSize: 24))), // Profile page
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Home Page',style: TextStyle(color: Colors.white)),
+        backgroundColor: Color(0xffe23636),
       ),
-      body: Center(
-        child: Text(
-          widget.userEmail ?? 'Guest Mode',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      body: widgetOptions[_selectedIndex], // Display the selected page
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home,),
             label: 'Home',
           ),
           BottomNavigationBarItem(
@@ -46,11 +50,9 @@ class _HomePageState extends State<Main> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color(0xffe23636),
         onTap: _onItemTapped,
       ),
     );
   }
 }
-
-// void main() => runApp(MaterialApp(home: HomePage(userEmail: null)));
