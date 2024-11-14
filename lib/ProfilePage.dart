@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_final_project/SingInForm.dart';
+import 'package:mobile_dev_final_project/SingUpForm.dart';
 import 'main.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -12,7 +14,56 @@ class ProfilePage extends StatelessWidget {
     if (user == null) {
       return Scaffold(
         appBar: AppBar(title: Text('Profile')),
-        body: Center(child: Text('No user is currently logged in.\n Sign up or Sign in below')),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 50,  // Size of the avatar
+                  backgroundColor: Colors.grey[200],  // Background color
+                  child: Icon(
+                    Icons.person,  // Default icon if no image
+                    size: 50,
+                    color: Colors.grey[800],  // Icon color
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'No user is currently logged in.',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 20),
+                // Sign Up and Sign In buttons
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigate to the Sign Up page
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUpForm(),
+                        )
+                    );
+                  },
+                  child: Text('Sign Up'),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigate to the Sign In page
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(
+                          builder: (context) => SignInForm(),
+                        )
+                    );
+                  },
+                  child: Text('Sign In'),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'authService.dart';
+import 'main.dart';
 
 class SignUpForm extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -11,7 +12,18 @@ class SignUpForm extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text("Sign In"),
+        title: Text("Signup"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navigate back to the previous screen
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(title: "AutoHub",),
+                )
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

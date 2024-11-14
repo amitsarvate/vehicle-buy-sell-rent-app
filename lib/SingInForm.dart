@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'authService.dart';
+import 'main.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -45,9 +46,21 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('Login & Signup',style: TextStyle(color: Colors.white)),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navigate back to the previous screen
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(title: "AutoHub",),
+                )
+            );
+          },
+        ),
         backgroundColor: Color(0xffe23636),
         bottom: TabBar(
           controller: _tabController,
