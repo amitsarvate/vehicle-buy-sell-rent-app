@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'SellPost.dart';
 import 'SellPostModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SellCarPage extends StatefulWidget{
 
@@ -24,6 +25,7 @@ enum Models {
 }
 
 class _SellCarPageState extends State<SellCarPage>{
+
   final TextEditingController modelController = TextEditingController();
   final TextEditingController yearController = TextEditingController();
   final TextEditingController priceController = TextEditingController();

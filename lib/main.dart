@@ -6,6 +6,7 @@ import 'package:mobile_dev_final_project/firebase_options.dart';
 import 'SingInForm.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'MainPage.dart';
+import 'SingInForm.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -132,10 +133,10 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    print('Buy / Rent Car Button Pressed');
+                    print('Sign in/Sign up Button Pressed');
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BuyRentCarPage()));
+                        MaterialPageRoute(builder: (context) => SignInForm()));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xffe23636), // Button color
@@ -147,32 +148,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   child: Text(
-                    'Buy / Rent Car',
+                    'Sign in/Sign up',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
                 SizedBox(height: 20), // Space between buttons
-                ElevatedButton(
-                  onPressed: () {
-                    print('Sell Car Button Pressed');
-                    Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => SellCarPage()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xffe23636), // Button color
-                    elevation: 5, // Elevation for shadow
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2),
-                      side: BorderSide(color: Colors.white, width: 2), // Border color
-                    ),
-                  ),
-                  child: Text(
-                    'Sell Car',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
               ],
             ),
           ),

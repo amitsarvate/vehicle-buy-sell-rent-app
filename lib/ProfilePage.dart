@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_final_project/SingInForm.dart';
-import 'package:mobile_dev_final_project/SingUpForm.dart';
 import 'main.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -36,19 +35,6 @@ class ProfilePage extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 20),
-                // Sign Up and Sign In buttons
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigate to the Sign Up page
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(
-                          builder: (context) => SignUpForm(),
-                        )
-                    );
-                  },
-                  child: Text('Sign Up'),
-                ),
-                SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to the Sign In page
@@ -58,7 +44,7 @@ class ProfilePage extends StatelessWidget {
                         )
                     );
                   },
-                  child: Text('Sign In'),
+                  child: Text('Sign In / Sign up'),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_final_project/BuyRentCarPage.dart';
 import 'SellPost.dart';
 import 'SellPostModel.dart';
 
@@ -15,7 +16,25 @@ class SellPostListPage extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          // "Filters" button in the top-right corner of the AppBar
+
+          IconButton(
+            icon: const Icon(Icons.filter_list), // Filter icon
+            onPressed: () {
+              // Navigate to the Filters page when the button is clicked
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BuyRentCarPage(), // Navigate to FiltersPage
+                ),
+              );
+            },
+          ),
+        ],
       ),
+
+
       body: StreamBuilder<List<SellPost>>(
         stream: sellPostModel.getSellsPostStream(),
         builder: (context, snapshot) {
@@ -43,6 +62,19 @@ class SellPostListPage extends StatelessWidget {
                   ),
                   title: Text(sellPost.model ?? 'Unknown Model'),
                   subtitle: Text('\$${sellPost.price ?? 'N/A'}'),
+                  //This button will be to view the listing
+                  trailing: IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: () {
+                      // Navigate to a new page with detailed information about the car
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BuyRentCarPage(), //im routing it to here for now till page is made!!!
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             );
