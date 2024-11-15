@@ -16,11 +16,14 @@ class SellPostListPage extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white),
         ),
+        automaticallyImplyLeading: false,
         actions: [
           // "Filters" button in the top-right corner of the AppBar
-
           IconButton(
-            icon: const Icon(Icons.filter_list), // Filter icon
+            icon: const Icon(
+              Icons.filter_list,
+              color: Colors.white,  // Set the color to white
+            ),
             onPressed: () {
               // Navigate to the Filters page when the button is clicked
               Navigator.push(
@@ -33,7 +36,6 @@ class SellPostListPage extends StatelessWidget {
           ),
         ],
       ),
-
 
       body: StreamBuilder<List<SellPost>>(
         stream: sellPostModel.getSellsPostStream(),
@@ -50,30 +52,41 @@ class SellPostListPage extends StatelessWidget {
               itemCount: sellPosts.length,
               itemBuilder: (context, index) {
                 final sellPost = sellPosts[index];
-                return ListTile(
-                  leading: Image.network(
-                    sellPost.image ?? '',
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.image, size: 60, color: Colors.grey);
-                    },
-                  ),
-                  title: Text(sellPost.model ?? 'Unknown Model'),
-                  subtitle: Text('\$${sellPost.price ?? 'N/A'}'),
-                  //This button will be to view the listing
-                  trailing: IconButton(
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () {
-                      // Navigate to a new page with detailed information about the car
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BuyRentCarPage(), //im routing it to here for now till page is made!!!
+                return GestureDetector(
+                  onTap: () {
+                    // Navigate to a new page with detailed information about the car
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BuyRentCarPage(), //im routing it to here for now till page is made!!!
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 120,
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          leading: Image.network(
+                            sellPost.image ?? '',
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(Icons.image, size: 80, color: Colors.grey);
+                            },
+                          ),
+                          title: Text(sellPost.model ?? 'Unknown Model'),
+                          subtitle: Text('\$${sellPost.price ?? 'N/A'}'),
                         ),
-                      );
-                    },
+                        Divider(
+                          color: Colors.grey[300],
+                          thickness: 3
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -84,3 +97,4 @@ class SellPostListPage extends StatelessWidget {
     );
   }
 }
+

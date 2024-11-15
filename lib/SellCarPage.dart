@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'SingInForm.dart';
 import 'LocalDatabase.dart';
 import 'DraftsPage.dart';
+import 'snackbar_helper.dart';
 
 class SellCarPage extends StatefulWidget {
   @override
@@ -58,9 +59,7 @@ class _SellCarPageState extends State<SellCarPage> {
         priceController.text.isEmpty ||
         descriptionController.text.isEmpty ||
         imageController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all the fields')),
-      );
+        SnackbarHelper.showSnackBar(context, 'Please fill all the fields');
       return;
     }
 
@@ -97,15 +96,10 @@ class _SellCarPageState extends State<SellCarPage> {
       priceController.clear();
       descriptionController.clear();
       imageController.clear();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Car added to listings successfully!')),
-      );
+      SnackbarHelper.showSnackBar(context, 'Car added to listings successfully!');
       print(newPost.toMap());
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to add car to listings: $e')),
-      );
+      SnackbarHelper.showSnackBar(context, 'Failed to add car to listings: $e');
     }
   }
 
@@ -162,15 +156,11 @@ class _SellCarPageState extends State<SellCarPage> {
       imageController.clear();
 
       // Show a success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Draft saved successfully!')),
-      );
+      SnackbarHelper.showSnackBar(context, 'Draft saved successfully!');
       print(draftPost.toMap());
     } catch (e) {
       // Show an error message if something goes wrong
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to save draft: $e')),
-      );
+      SnackbarHelper.showSnackBar(context, 'Failed to save draft: $e');
     }
   }
 
@@ -243,6 +233,7 @@ class _SellCarPageState extends State<SellCarPage> {
           'Sell Car',
           style: TextStyle(color: Colors.white),
         ),
+        automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: const Color(0xffe23636),
       ),
@@ -345,38 +336,49 @@ class _SellCarPageState extends State<SellCarPage> {
               ElevatedButton(
                 onPressed: _handleAddToListings,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffe23636),
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  backgroundColor: const Color(0xffffffff),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(color: Colors.red, width: 2),
+                  ),
                 ),
                 child: const Text(
                   'Add to Listings',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
+
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  _handleSaveAsDraft();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffe23636),
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                ),
-                child: const Text(
-                  'Save as Draft',
-                  style: TextStyle(color: Colors.white),
+            ElevatedButton(
+              onPressed: _handleSaveAsDraft,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xffffffff),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(color: Colors.red, width: 2),
                 ),
               ),
+              child: const Text(
+                'Save as Draft',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _useDraft,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffe23636),
+                  backgroundColor: const Color(0xffffffff),
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(color: Colors.red, width: 2),
+                  ),
                 ),
                 child: const Text(
                   'View Drafts',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
             ],

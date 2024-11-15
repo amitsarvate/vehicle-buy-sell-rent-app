@@ -55,7 +55,9 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Profile',style: TextStyle(color: Colors.white),),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xffe23636),
       ),
       body: Center(
         child: Padding(
@@ -87,6 +89,14 @@ class ProfilePage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffffffff),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(color: Colors.red, width: 2),
+                  ),
+                ),
                 onPressed: () async {
                   // Log the user out
                   await FirebaseAuth.instance.signOut();
@@ -104,7 +114,7 @@ class ProfilePage extends StatelessWidget {
                       )
                   );
                 },
-                child: Text('Logout'),
+                child: Text('Logout',style: TextStyle(color: Colors.red)),
               ),
             ],
           ),

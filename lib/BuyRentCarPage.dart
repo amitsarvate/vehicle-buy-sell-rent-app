@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'makeAndModelAPIFetch.dart' as MMAPI;
+import 'snackbar_helper.dart';
 
 // Main app widget
 class BuyRentCarPage extends StatefulWidget {
@@ -151,6 +152,14 @@ class _BuyRentCarPageState extends State<BuyRentCarPage> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xffffffff),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(color: Colors.red, width: 2),
+                ),
+              ),
               onPressed: () {
                 if (selectedMake != null && selectedModel != null) {
                   print('Selected Make: $selectedMake');
@@ -163,7 +172,7 @@ class _BuyRentCarPageState extends State<BuyRentCarPage> {
                   print('Please select a make and a model');
                 }
               },
-              child: const Text('Search'),
+              child: const Text('Search',style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
