@@ -7,6 +7,7 @@ import 'SingInForm.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'MainPage.dart';
 import 'SingInForm.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +58,10 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
+
+    // Get the current user from Firebase Auth
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffe23636),
@@ -76,35 +81,29 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.directions_car, color: Colors.white),
                 ),
                 SizedBox(width: 10),
-                IconButton(
-                  onPressed: () {
-                    print('Sell Button Pressed');
-                  },
-                  icon: Icon(Icons.sell, color: Colors.white),
-                ),
-                SizedBox(width: 10),
-                TextButton(
-                  onPressed: () {
-                   // print('Sign In Button Pressed');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignInForm(),
-                      ),
-                    );
+                if (user == null)
+                  TextButton(
+                    onPressed: () {
+                     // print('Sign In Button Pressed');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignInForm(),
+                        ),
+                      );
 
-                  },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                    },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
               ],
             )
           ],
@@ -131,27 +130,60 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    print('Sign in/Sign up Button Pressed');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignInForm()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xffe23636), // Button color
-                    elevation: 5, // Elevation for shadow
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2),
-                      side: BorderSide(color: Colors.white, width: 2), // Border color
+                if (user == null)
+                  ElevatedButton(
+                    onPressed: () {
+                      print('Sign in/Sign up Button Pressed');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInForm()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffe23636), // Button color
+                      elevation: 5, // Elevation for shadow
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2),
+                        side: BorderSide(
+                            color: Colors.white, width: 2), // Border color
+                      ),
+                    ),
+                    child: Text(
+                      'Sign in/Sign up',
+                      style: TextStyle(fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                   ),
-                  child: Text(
-                    'Sign in/Sign up',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  if (user != null)
+                    ElevatedButton(
+                      onPressed: () {
+                        print('Home Page button Pressed');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Main()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xffe23636), // Button color
+                        elevation: 5, // Elevation for shadow
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(2),
+                          side: BorderSide(
+                              color: Colors.white, width: 2), // Border color
+                        ),
+                      ),
+                    child: Text(
+                      'Home Page',
+                      style: TextStyle(fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                   ),
-                ),
                 SizedBox(height: 20), // Space between buttons
               ],
             ),

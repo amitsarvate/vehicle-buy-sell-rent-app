@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'SellPost.dart';
 import 'SellPostModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'SingInForm.dart';
 
 class SellCarPage extends StatefulWidget{
 
@@ -99,6 +100,52 @@ class _SellCarPageState extends State<SellCarPage>{
 
   @override
   Widget build(BuildContext context){
+
+    // Get the current user from Firebase Auth
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text('Profile')),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 50,  // Size of the avatar
+                  backgroundColor: Colors.grey[200],  // Background color
+                  child: Icon(
+                    Icons.person,  // Default icon if no image
+                    size: 50,
+                    color: Colors.grey[800],  // Icon color
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'You need to be logged in to add a listing.',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigate to the Sign In page
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(
+                          builder: (context) => SignInForm(),
+                        )
+                    );
+                  },
+                  child: Text('Sign In / Sign up'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
