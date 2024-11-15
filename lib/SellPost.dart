@@ -6,7 +6,7 @@ class SellPost{
   int? price ;
   String? description;
   String? image;
-  String? id;
+  int? id;
   DocumentReference? reference;
   //String userId;
   SellPost(
@@ -21,7 +21,7 @@ class SellPost{
 
       );
   SellPost.fromMap(Map<String,dynamic> map,{this.reference}){
-    this.id = reference?.id;
+    this.id = map['id'];
     this.model = map['model'];
     this.year = map['year'];
     this.image = map['image'];

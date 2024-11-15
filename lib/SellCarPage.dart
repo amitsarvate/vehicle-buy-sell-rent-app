@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'SellPost.dart';
 import 'SellPostModel.dart';
+import 'LocalDatabase.dart';
+import 'DraftsPage.dart';
 
 class SellCarPage extends StatefulWidget{
 
@@ -90,10 +92,85 @@ class _SellCarPageState extends State<SellCarPage>{
       );
     }
 
-
-
-
   }
+
+  void _handleSaveAsDraft() async {
+    if (modelController.text.isEmpty ||
+        yearController.text.isEmpty ||
+        priceController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        imageController.text.isEmpty) {
+      // Show an error or return if any field is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all the fields')),
+      );
+      return;
+    }
+
+    // Parse inputs
+    String model = _selectedModel?.models ?? "";
+    int year = int.tryParse(yearController.text) ?? 0;
+    int price = int.tryParse(priceController.text) ?? 0;
+    String description = descriptionController.text ?? "";
+    String image = imageController.text;
+
+    // Create a SellPost object
+    // Parse inputs
+
+    // Create a map from the form data
+    Map<String, dynamic> postData = {
+      'model': model,
+      'year': year,
+      'price': price,
+      'description': description,
+      'image': image,
+    };
+
+    // Create a SellPost object from the map
+    SellPost draftPost = SellPost.fromMap(postData);
+
+    // Clear the input fields after creating the SellPost object
+    try {
+      await LocalDatabase.instance.insertSellPost(draftPost);
+
+      // Clear the input fields after successful addition
+      modelController.clear();
+      yearController.clear();
+      priceController.clear();
+      descriptionController.clear();
+      imageController.clear();
+
+      // Show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Draft saved successfully!')),
+      );
+      print(draftPost.toMap());
+    } catch (e) {
+      // Show an error message if something goes wrong
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to save draft: $e')),
+      );
+    }
+  }
+
+  void _useDraft() async {
+    final selectedPost = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DraftsPage()),
+    );
+
+    if (selectedPost != null && selectedPost is SellPost) {
+      setState(() {
+        modelController.text = selectedPost.model ?? '';
+        yearController.text = selectedPost.year?.toString() ?? '';
+        priceController.text = selectedPost.price?.toString() ?? '';
+        descriptionController.text = selectedPost.description ?? '';
+        imageController.text = selectedPost.image ?? '';
+        _selectedModel = Models.values.firstWhere((model) => model.models == selectedPost.model);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context){
@@ -223,7 +300,7 @@ class _SellCarPageState extends State<SellCarPage>{
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                print('Search button pressed');
+                _handleSaveAsDraft();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xffe23636), // Button color
@@ -236,6 +313,23 @@ class _SellCarPageState extends State<SellCarPage>{
               ),
               child: const Text(
                 'Save as Draft',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: _useDraft,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xffe23636), // Button color
+                elevation: 5, // Elevation for shadow
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
+                  side: const BorderSide(color: Colors.white, width: 2), // Border color
+                ),
+              ),
+              child: const Text(
+                'View Drafts',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
