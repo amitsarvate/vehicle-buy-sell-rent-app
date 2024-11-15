@@ -6,13 +6,17 @@ import 'package:mobile_dev_final_project/firebase_options.dart';
 import 'SingInForm.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'MainPage.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await FirebaseAppCheck.instance.activate(
     webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
     androidProvider: AndroidProvider.debug,
   );
+
   runApp(const MyApp());
 }
 
@@ -67,7 +71,6 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                   onPressed: () {
                     goToHomePage();
-
                   },
                   icon: Icon(Icons.directions_car, color: Colors.white),
                 ),
