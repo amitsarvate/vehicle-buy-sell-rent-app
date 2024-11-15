@@ -5,6 +5,8 @@ import 'makeAndModelAPIFetch.dart' as MMAPI;
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'SingInForm.dart';
+import 'LocalDatabase.dart';
+import 'DraftsPage.dart';
 
 class SellCarPage extends StatefulWidget {
   @override
@@ -16,6 +18,8 @@ class _SellCarPageState extends State<SellCarPage> {
   // Get the current user from Firebase Auth
   User? user = FirebaseAuth.instance.currentUser;
 
+  final TextEditingController makeController = TextEditingController();
+  final TextEditingController modelController = TextEditingController();
   final TextEditingController yearController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -105,6 +109,89 @@ class _SellCarPageState extends State<SellCarPage> {
     }
   }
 
+  void _handleSaveAsDraft() async {
+    if (selectedMake == null ||
+        selectedModel == null ||
+        yearController.text.isEmpty ||
+        priceController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        imageController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all the fields')),
+      );
+      return;
+    }
+
+    // Parse inputs
+    String make = selectedMake!;
+    String model = selectedModel!.modelName;
+    int year = int.tryParse(yearController.text) ?? 0;
+    int price = int.tryParse(priceController.text) ?? 0;
+    String description = descriptionController.text;
+    String image = imageController.text;
+
+    // Create a SellPost object
+    // Parse inputs
+
+    // Create a map from the form data
+    Map<String, dynamic> postData = {
+      'make': make,
+      'model': model,
+      'year': year,
+      'price': price,
+      'description': description,
+      'image': image,
+    };
+
+    // Create a SellPost object from the map
+    SellPost draftPost = SellPost.fromMap(postData);
+
+    // Clear the input fields after creating the SellPost object
+    try {
+      await LocalDatabase.instance.insertSellPost(draftPost);
+
+      // Clear the input fields after successful addition
+      setState(() {
+        selectedMake = null;
+        selectedModel = null;
+        models = [];
+      });
+      yearController.clear();
+      priceController.clear();
+      descriptionController.clear();
+      imageController.clear();
+
+      // Show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Draft saved successfully!')),
+      );
+      print(draftPost.toMap());
+    } catch (e) {
+      // Show an error message if something goes wrong
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to save draft: $e')),
+      );
+    }
+  }
+
+  void _useDraft() async {
+    final selectedPost = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DraftsPage()),
+    );
+
+    if (selectedPost != null && selectedPost is SellPost) {
+      setState(() {
+        makeController.text = selectedPost.make ?? '';
+        modelController.text = selectedPost.model ?? '';
+        yearController.text = selectedPost.year?.toString() ?? '';
+        priceController.text = selectedPost.price?.toString() ?? '';
+        descriptionController.text = selectedPost.description ?? '';
+        imageController.text = selectedPost.image ?? '';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (user == null) {
@@ -165,6 +252,7 @@ class _SellCarPageState extends State<SellCarPage> {
           child: Column(
             children: [
               // Make Dropdown Search
+              const SizedBox(height: 20),
               DropdownSearch<String>(
                 items: makes,
                 selectedItem: selectedMake,
@@ -262,6 +350,32 @@ class _SellCarPageState extends State<SellCarPage> {
                 ),
                 child: const Text(
                   'Add to Listings',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _handleSaveAsDraft();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffe23636),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+                child: const Text(
+                  'Save as Draft',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _useDraft,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffe23636),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+                child: const Text(
+                  'View Drafts',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SellPost{
-  String ?model ;
+  String ?make;
+  String ?model;
   int ?year;
   int? price ;
   String? description;
   String? image;
-  String? id;
+  int? id;
   DocumentReference? reference;
   //String userId;
   SellPost(
+      this.make,
       this.model,
       this.year,
       this.price,
@@ -21,7 +23,8 @@ class SellPost{
 
       );
   SellPost.fromMap(Map<String,dynamic> map,{this.reference}){
-    this.id = reference?.id;
+    this.id = map['id'];
+    this.make = map['make'];
     this.model = map['model'];
     this.year = map['year'];
     this.image = map['image'];
@@ -33,7 +36,7 @@ class SellPost{
   }
   Map<String, dynamic> toMap(){
     return {
-
+      'make' :this.make,
       'model' :this.model,
       'year':this.year,
       'description' :this.description,

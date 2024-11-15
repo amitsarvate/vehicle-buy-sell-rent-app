@@ -48,6 +48,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
   permission_handler:
+  path: ^1.9.0
   sqflite:
   firebase_core: ^3.6.0
   flutter_local_notifications:
