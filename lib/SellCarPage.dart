@@ -8,6 +8,7 @@ import 'SingInForm.dart';
 import 'LocalDatabase.dart';
 import 'DraftsPage.dart';
 import 'snackbar_helper.dart';
+import 'Notifications.dart';
 
 class SellCarPage extends StatefulWidget {
   @override
@@ -33,6 +34,7 @@ class _SellCarPageState extends State<SellCarPage> {
   MMAPI.Model? selectedModel;
 
   SellPostModel sellPostModel = SellPostModel();
+  Notifications notification = Notifications();
 
   @override
   void initState() {
@@ -85,6 +87,7 @@ class _SellCarPageState extends State<SellCarPage> {
 
     try {
       await sellPostModel.insertSellPost(newPost);
+      notification.sendAddListingNotification(newPost);
 
       // Clear the input fields after successful addition
       setState(() {
