@@ -2,18 +2,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'MainPage.dart';
 import 'snackbar_helper.dart';
+import 'User.dart';
+import 'UserModel.dart';
+
 
 class AuthService {
   Future<void> signUp(
       BuildContext context, {
         required String email,
         required String password,
+        required Map<String,dynamic> user,
       }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      String id = userCredential.user!.uid;
+      user['id'] = id;
+      localUser newUser = localUser.fromMap(user);
+      UserModel userModel = UserModel();
+      await userModel.insertUser(newUser);
+
 
       SnackbarHelper.showSnackBar(context, "Sign-up Successful!");
 

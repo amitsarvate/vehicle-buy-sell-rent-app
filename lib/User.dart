@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User{
+class localUser{
   String? name;
   String ? lastName;
   String ? phoneNumber;
   String?email;
-  int? id;
+  String? id;
   DocumentReference? reference;
 
-  User(this.name,
+  localUser(this.name,
       this.lastName,
       this.phoneNumber,
       this.email,
       this.id,
       this.reference
       );
-  User.fromMap(Map<String,dynamic> map,{this.reference}){
+  localUser.fromMap(Map<String,dynamic> map,{this.reference}){
     this.id = map['id'];
     this.name = map['name'];
     this.lastName = map['lastName'];

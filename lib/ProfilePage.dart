@@ -2,12 +2,41 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_final_project/SingInForm.dart';
 import 'main.dart';
+import 'package:mobile_dev_final_project/UserModel.dart';
+import 'User.dart';
+Future<localUser?> fetchAndPrintUser() async {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  UserModel userModel = UserModel();
+  if (user != null) {
+    // Await the result of the asynchronous function
+    localUser? localuser = await userModel.getUserById(user.uid);
+    print(user.uid);
+
+    if (localuser != null) {
+      print(localuser.toMap());
+      return localuser;
+    } else {
+      print("No user found 1");
+      return null;
+
+    }
+  } else {
+    print("No user found");
+    return null;
+  }
+}
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get the current user from Firebase Auth
     User? user = FirebaseAuth.instance.currentUser;
+
+    fetchAndPrintUser() ;
+
+
+
 
     // Check if user is logged in
     if (user == null) {
