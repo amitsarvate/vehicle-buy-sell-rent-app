@@ -9,7 +9,7 @@ class SellPost{
   String? image;
   int? id;
   DocumentReference? reference;
-  //String userId;
+  String ?userId;
   SellPost(
       this.make,
       this.model,
@@ -18,7 +18,8 @@ class SellPost{
       this.description,
       this.image,
       this.id,
-      this.reference
+      this.reference,
+      this.userId
 
 
       );
@@ -30,6 +31,8 @@ class SellPost{
     this.image = map['image'];
     this.price = map['price'];
     this.description = map['description'];
+    this.userId = map['userId'];
+
 
 
 
@@ -42,6 +45,7 @@ class SellPost{
       'description' :this.description,
       'price':this.price,
       'image':this.image,
+      'userId':this.userId,
     };
 
   }

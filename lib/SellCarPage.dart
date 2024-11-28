@@ -64,6 +64,7 @@ class _SellCarPageState extends State<SellCarPage> {
         SnackbarHelper.showSnackBar(context, 'Please fill all the fields');
       return;
     }
+    User? user = FirebaseAuth.instance.currentUser;
 
     // Parse inputs
     String make = selectedMake!;
@@ -81,6 +82,7 @@ class _SellCarPageState extends State<SellCarPage> {
       'price': price,
       'description': description,
       'image': image,
+      'userId':user?.uid,
     };
 
     SellPost newPost = SellPost.fromMap(postData);
