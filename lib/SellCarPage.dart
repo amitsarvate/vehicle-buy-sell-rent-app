@@ -177,8 +177,9 @@ class _SellCarPageState extends State<SellCarPage> {
 
     if (selectedPost != null && selectedPost is SellPost) {
       setState(() {
-        makeController.text = selectedPost.make ?? '';
-        modelController.text = selectedPost.model ?? '';
+        selectedMake = selectedPost.make;
+        models = makesAndModels[selectedMake] ?? [];
+        selectedModel = models.firstWhere((model) => model.modelName == selectedPost.model);
         yearController.text = selectedPost.year?.toString() ?? '';
         priceController.text = selectedPost.price?.toString() ?? '';
         descriptionController.text = selectedPost.description ?? '';
