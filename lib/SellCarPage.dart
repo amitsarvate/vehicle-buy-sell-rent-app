@@ -64,6 +64,7 @@ class _SellCarPageState extends State<SellCarPage> {
         SnackbarHelper.showSnackBar(context, 'Please fill all the fields');
       return;
     }
+    User? user = FirebaseAuth.instance.currentUser;
 
     // Parse inputs
     String make = selectedMake!;
@@ -81,6 +82,7 @@ class _SellCarPageState extends State<SellCarPage> {
       'price': price,
       'description': description,
       'image': image,
+      'userId':user?.uid,
     };
 
     SellPost newPost = SellPost.fromMap(postData);
@@ -175,8 +177,9 @@ class _SellCarPageState extends State<SellCarPage> {
 
     if (selectedPost != null && selectedPost is SellPost) {
       setState(() {
-        makeController.text = selectedPost.make ?? '';
-        modelController.text = selectedPost.model ?? '';
+        selectedMake = selectedPost.make;
+        models = makesAndModels[selectedMake] ?? [];
+        selectedModel = models.firstWhere((model) => model.modelName == selectedPost.model);
         yearController.text = selectedPost.year?.toString() ?? '';
         priceController.text = selectedPost.price?.toString() ?? '';
         descriptionController.text = selectedPost.description ?? '';

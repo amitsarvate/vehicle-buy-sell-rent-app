@@ -2,12 +2,50 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_final_project/SingInForm.dart';
 import 'main.dart';
+import 'package:mobile_dev_final_project/UserModel.dart';
+import 'User.dart';
+Future<localUser?> fetchAndPrintUser() async {
+  User? user = FirebaseAuth.instance.currentUser;
 
-class ProfilePage extends StatelessWidget {
+  UserModel userModel = UserModel();
+  if (user != null) {
+    // Await the result of the asynchronous function
+    localUser? localuser = await userModel.getUserById(user.uid);
+    print(user.uid);
+
+    if (localuser != null) {
+      print(localuser.toMap());
+      return localuser;
+    } else {
+      print("No user found 1");
+      return null;
+
+    }
+  } else {
+    print("No user found");
+    return null;
+  }
+}
+
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final TextEditingController _descriptionController = TextEditingController();
+  bool _isEditing = false; // To toggle between editing and viewing the description
+
+
   @override
   Widget build(BuildContext context) {
     // Get the current user from Firebase Auth
     User? user = FirebaseAuth.instance.currentUser;
+
+    fetchAndPrintUser() ;
+
+
+
 
     // Check if user is logged in
     if (user == null) {
@@ -88,6 +126,44 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
+
+              // Editable description field
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isEditing = true;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[200],
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: _isEditing
+                      ? TextField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter your description...',
+                      border: OutlineInputBorder(),
+                    ),
+                    onSubmitted: (value) {
+                      setState(() {
+                        _isEditing = false;
+                      });
+                    },
+                  )
+                      : Text(
+                    _descriptionController.text.isEmpty
+                        ? 'Tap to add a description'
+                        : _descriptionController.text,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffffffff),

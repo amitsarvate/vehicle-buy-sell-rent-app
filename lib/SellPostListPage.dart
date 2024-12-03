@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_final_project/BuyRentCarPage.dart';
 import 'SellPost.dart';
 import 'SellPostModel.dart';
+import 'singlePostBuy.dart';
 
 class SellPostListPage extends StatelessWidget {
   final SellPostModel sellPostModel = SellPostModel();
@@ -17,26 +17,7 @@ class SellPostListPage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         automaticallyImplyLeading: false,
-        actions: [
-          // "Filters" button in the top-right corner of the AppBar
-          IconButton(
-            icon: const Icon(
-              Icons.filter_list,
-              color: Colors.white,  // Set the color to white
-            ),
-            onPressed: () {
-              // Navigate to the Filters page when the button is clicked
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BuyRentCarPage(), // Navigate to FiltersPage
-                ),
-              );
-            },
-          ),
-        ],
       ),
-
       body: StreamBuilder<List<SellPost>>(
         stream: sellPostModel.getSellsPostStream(),
         builder: (context, snapshot) {
@@ -54,11 +35,12 @@ class SellPostListPage extends StatelessWidget {
                 final sellPost = sellPosts[index];
                 return GestureDetector(
                   onTap: () {
-                    // Navigate to a new page with detailed information about the car
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BuyRentCarPage(), //im routing it to here for now till page is made!!!
+                        builder: (context) => CarListingScreen(
+                          sellPost: sellPost, // Pass the entire object
+                        ),
                       ),
                     );
                   },
@@ -68,23 +50,21 @@ class SellPostListPage extends StatelessWidget {
                     child: Column(
                       children: [
                         ListTile(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          contentPadding:
+                          const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                           leading: Image.network(
                             sellPost.image ?? '',
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return Icon(Icons.image, size: 80, color: Colors.grey);
+                              return const Icon(Icons.image, size: 80, color: Colors.grey);
                             },
                           ),
                           title: Text(sellPost.model ?? 'Unknown Model'),
                           subtitle: Text('\$${sellPost.price ?? 'N/A'}'),
                         ),
-                        Divider(
-                          color: Colors.grey[300],
-                          thickness: 3
-                        ),
+                        Divider(color: Colors.grey[300], thickness: 3),
                       ],
                     ),
                   ),
@@ -97,4 +77,3 @@ class SellPostListPage extends StatelessWidget {
     );
   }
 }
-

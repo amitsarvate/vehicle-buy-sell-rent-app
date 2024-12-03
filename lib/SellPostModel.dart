@@ -16,11 +16,18 @@ class SellPostModel{
   }
 
   Future<void> insertSellPost(SellPost sellPost) async {
+    try {
 
-    DocumentReference docRef = await sellPostCollection.add(sellPost.toMap());
-    sellPost.reference = docRef;
-    // Store reference for future updates
+      DocumentReference docRef = await sellPostCollection.add(sellPost.toMap());
+
+      await docRef.update({'reference': docRef.path});
+
+      sellPost.reference = docRef;
+    } catch (e) {
+      print('Error inserting sell post: $e');
+    }
   }
+
   Future<void> deleteSellPost(SellPost sellPost) async {
     if (sellPost.reference != null) {
       await sellPost.reference!.delete();

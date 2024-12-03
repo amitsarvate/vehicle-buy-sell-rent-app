@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
-                    'https://www.wilhitelawfirm.com/wp-content/uploads/2024/10/driving-at-mountain-side.jpg'), // Replace with your image URL
+                    'https://www.wilhitelawfirm.com/wp-content/uploads/2024/10/driving-at-mountain-side.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -130,6 +130,27 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  'Welcome to AutoHub',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'Your ultimate destination for buying, renting, and selling vehicles.',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
                 if (user == null)
                   ElevatedButton(
                     onPressed: () {
