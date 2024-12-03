@@ -139,12 +139,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(height: 8),
-                Text(
-                  'Your ultimate destination for buying, renting, and selling vehicles.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding to both sides
+                  child: Text(
+                    'Your ultimate destination for buying, renting, and selling vehicles.',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
                   ),
                 ),
                 SizedBox(height: 30),
