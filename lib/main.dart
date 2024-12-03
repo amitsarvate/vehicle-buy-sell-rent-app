@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 8),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding to both sides
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     'Your ultimate destination for buying, renting, and selling vehicles.',
                     textAlign: TextAlign.center,
