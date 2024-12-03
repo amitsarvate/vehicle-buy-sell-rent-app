@@ -27,7 +27,16 @@ Future<localUser?> fetchAndPrintUser() async {
   }
 }
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final TextEditingController _descriptionController = TextEditingController();
+  bool _isEditing = false; // To toggle between editing and viewing the description
+
+
   @override
   Widget build(BuildContext context) {
     // Get the current user from Firebase Auth
@@ -117,6 +126,44 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
+
+              // Editable description field
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isEditing = true;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[200],
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: _isEditing
+                      ? TextField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter your description...',
+                      border: OutlineInputBorder(),
+                    ),
+                    onSubmitted: (value) {
+                      setState(() {
+                        _isEditing = false;
+                      });
+                    },
+                  )
+                      : Text(
+                    _descriptionController.text.isEmpty
+                        ? 'Tap to add a description'
+                        : _descriptionController.text,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffffffff),
