@@ -26,11 +26,11 @@ class CarListingScreen extends StatelessWidget {
           Container(
             height: screenHeight * 0.4, // Set image container height to 40% of screen height
             width: double.infinity, // Full width
-            color: Colors.black12, // Set grey background for padding
-            child: Center(
+            color: Colors.black38, // Black background for padding
+            child: FittedBox(
+              fit: BoxFit.contain, // Ensures the image is scaled to either width or height
               child: Image.network(
                 sellPost.image ?? '', // Display image from SellPost
-                fit: BoxFit.contain, // Ensure the whole image is visible without cropping
                 errorBuilder: (context, error, stackTrace) {
                   return const Icon(Icons.image, size: 80, color: Colors.grey); // Fallback icon on error
                 },

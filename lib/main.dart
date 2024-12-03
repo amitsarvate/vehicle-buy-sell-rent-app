@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
-                    'https://www.wilhitelawfirm.com/wp-content/uploads/2024/10/driving-at-mountain-side.jpg'), // Replace with your image URL
+                    'https://www.wilhitelawfirm.com/wp-content/uploads/2024/10/driving-at-mountain-side.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
